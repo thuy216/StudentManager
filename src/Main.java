@@ -12,7 +12,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         int n;
-        System.out.println("Nhap vao so luong sv:");
+        System.out.println("Click on the number of students:");
         n = scanner.nextInt();
         scanner.nextLine(); // Consume newline
 
@@ -22,13 +22,13 @@ public class Main {
 
         boolean running = true;
         while (running) {
-            System.out.println("1. In danh sach sinh vien");
-            System.out.println("2. Xoa sinh vien theo ma");
-            System.out.println("3. Sap xep sinh vien theo diem giam dan");
-            System.out.println("4. Tim sinh vien theo ma hoac ten");
-            System.out.println("5. Tim sinh vien co diem >= x");
-            System.out.println("6. Thoat");
-            System.out.print("Chon chuc nang: ");
+            System.out.println("1. Print student list");
+            System.out.println("2. Delete student by code");
+            System.out.println("3. Sort students by score in descending order");
+            System.out.println("4. Find students by code or name");
+            System.out.println("5. Find students with score >= x");
+            System.out.println("6. Exit");
+            System.out.print("Select function: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
@@ -37,7 +37,7 @@ public class Main {
                     output();
                     break;
                 case 2:
-                    System.out.print("Nhap ma sinh vien can xoa: ");
+                    System.out.print("Enter the student code to delete: ");
                     String code = scanner.nextLine();
                     removeByCode(code);
                     break;
@@ -45,22 +45,22 @@ public class Main {
                     sortByGradeDesc();
                     break;
                 case 4:
-                    System.out.print("Nhap ma hoac ten sinh vien: ");
+                    System.out.print("Enter student code or name: ");
                     String keyword = scanner.nextLine();
                     Student student = findByCodeOrName(keyword);
                     if (student != null) {
                         System.out.println(student);
                     } else {
-                        System.out.println("Khong tim thay sinh vien.");
+                        System.out.println("No students found.");
                     }
                     break;
                 case 5:
-                    System.out.print("Nhap diem toi thieu: ");
+                    System.out.print("Enter minimum score: ");
                     float grade = scanner.nextFloat();
                     scanner.nextLine(); // Consume newline
                     List<Student> filteredStudents = filterByGrade(grade);
                     if (filteredStudents.isEmpty()) {
-                        System.out.println("Khong tim thay sinh vien co diem >= " + grade);
+                        System.out.println("No student found with score >= " + grade);
                     } else {
                         for (Student s : filteredStudents) {
                             System.out.println(s);
@@ -71,7 +71,7 @@ public class Main {
                     running = false;
                     break;
                 default:
-                    System.out.println("Lua chon khong hop le. Vui long chon lai.");
+                    System.out.println("Invalid selection. Please select again.");
                     break;
             }
         }
@@ -82,22 +82,22 @@ public class Main {
     public static void input() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Nhap vao thong tin sinh vien:");
+        System.out.println("Enter student information:");
 
-        System.out.println("Nhap ma sv:");
+        System.out.println("Enter student code:");
         String code = scanner.nextLine();
-        System.out.println("Nhap ten sv:");
+        System.out.println("Enter student name:");
         String name = scanner.nextLine();
-        System.out.println("Nhap tuoi sv:");
+        System.out.println("Enter student age:");
         int age = scanner.nextInt();
         scanner.nextLine(); // Consume newline
-        System.out.println("Nhap email:");
+        System.out.println("Enter email:");
         String email = scanner.nextLine();
-        System.out.println("Nhap so dien thoai:");
+        System.out.println("Enter phone number:");
         String phone = scanner.nextLine();
-        System.out.println("Nhap gioi tinh (0: Nam, 1: Nu):");
+        System.out.println("Enter gender (0: Male, 1: Female):");
         int gender = scanner.nextInt();
-        System.out.println("Nhap diem:");
+        System.out.println("Enter score:");
         float grade = scanner.nextFloat();
         scanner.nextLine(); // Consume newline
 
@@ -105,24 +105,24 @@ public class Main {
         studentList.add(student);
     }
 
-    // In danh sach sinh vien
+    // Print student list
     public static void output() {
         for (Student student : studentList) {
             System.out.println(student);
         }
     }
 
-    // Xoa sinh vien theo ma
+    // Delete students by code
     public static void removeByCode(String code) {
         boolean removed = studentList.removeIf(student -> student.getCode().equals(code));
         if (removed) {
-            System.out.println("Sinh vien co ma " + code + " da bi xoa.");
+            System.out.println("Students have codes " + code + " skin rub");
         } else {
-            System.out.println("Khong tim thay sinh vien voi ma " + code);
+            System.out.println("No student found with code" + code);
         }
     }
 
-    // Sap xep sinh vien theo diem giam dan
+    // Sort students by score in descending order
     public static void sortByGradeDesc() {
         Collections.sort(studentList, new Comparator<Student>() {
             @Override
@@ -130,10 +130,10 @@ public class Main {
                 return Float.compare(s2.getGrade(), s1.getGrade());
             }
         });
-        System.out.println("Danh sach sinh vien da duoc sap xep theo diem giam dan.");
+        System.out.println("The list of students has been sorted by descending score.");
     }
 
-    // Tim sinh vien theo ma hoac ten
+    // Find students by code or name
     public static Student findByCodeOrName(String keyword) {
         for (Student student : studentList) {
             if (student.getCode().equals(keyword) || student.getName().equalsIgnoreCase(keyword)) {
@@ -143,7 +143,7 @@ public class Main {
         return null;
     }
 
-    // Tim sinh vien co diem >= x
+    // Find students with score >= x
     public static List<Student> filterByGrade(float x) {
         List<Student> result = new ArrayList<>();
         for (Student student : studentList) {
